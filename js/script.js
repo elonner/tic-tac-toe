@@ -1,8 +1,7 @@
 //--------constants
 const DISPLAY = {
-    'X': 'X',
-    'O': 'O',
-    '0': ''
+    'X': ['X', 'https://i.imgur.com/gG6q8U7.png'],
+    'O': ['O', 'https://i.imgur.com/wB9i5bI.png'],
 }
 
 //--------state variables
@@ -15,6 +14,7 @@ let totTurns;
 //--------cached elements
 const messageEl = document.querySelector('h1');
 const playAgainBtn = document.querySelector('button');
+const tileEls = document.querySelectorAll('#board > div');
 
 //--------event listeners
 document.getElementById('board').addEventListener('click', handleMove);
@@ -32,6 +32,13 @@ function init() {
         [0, 0, 0], //row 1
         [0, 0, 0]  //row 2
     ];
+
+    tileEls.forEach(tile => {
+        if (tile.firstChild) {
+            tile.removeChild(tile.firstChild);
+            tile.classList.remove('full');
+        }
+    });
     turn = 'X';
     totTurns = 0;
     winner = null;
@@ -40,14 +47,16 @@ function init() {
 
 function handleMove(e) {
     //ensure click is on correct element
-    if (e.target.tagName.toLowerCase() !== 'div') return;
+    if (e.target.tagName.toLowerCase() !== 'div' || winner) return;
     //update board
     const rowIdx = e.target.id[3];
-    const colIdx = e.target.id[1]
+    const colIdx = e.target.id[1];
     //change value of square
     if (board[rowIdx][colIdx] === 'X' || board[rowIdx][colIdx] === 'O') return;
     board[rowIdx][colIdx] = turn;
     totTurns++;
+    //remove hover functionality
+
     //switch turns
     turn === 'X' ? turn = 'O' : turn = 'X';
     //check for winner
@@ -97,7 +106,16 @@ function renderBoard() {
         rowArr.forEach((cellVal, colIdx) => {
             const cellId = `c${colIdx}r${rowIdx}`;
             const cellEl = document.getElementById(cellId);
-            cellEl.textContent = DISPLAY[cellVal];
+            // cellEl.textContent = DISPLAY[cellVal];
+
+            if (cellVal !== 0 && cellEl.children.length === 0) {
+                cellEl.classList.add('full');
+                const img = document.createElement('img');
+                img.classList.add('.slide-in-fwd-bl');
+                img.setAttribute('src', DISPLAY[cellVal][1]);
+                cellEl.appendChild(img);
+                img.style.height = '15vmin';
+            }
         });
     });
 }
@@ -106,9 +124,9 @@ function renderMessage() {
     if (winner === 'T') {
         messageEl.innerText = "It's a Tie!";
     } else if (winner) {
-        messageEl.innerHTML = `${DISPLAY[winner]} Wins!`;
+        messageEl.innerHTML = `${DISPLAY[winner][0]} Wins!`;
     } else {
-        messageEl.innerHTML = `${DISPLAY[turn]}'s Turn`;
+        messageEl.innerHTML = `${DISPLAY[turn][0]}'s Turn`;
     }
 }
 
