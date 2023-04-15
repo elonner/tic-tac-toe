@@ -55,9 +55,7 @@ function handleMove(e) {
     if (board[rowIdx][colIdx] === 'X' || board[rowIdx][colIdx] === 'O') return;
     board[rowIdx][colIdx] = turn;
     totTurns++;
-    //remove hover functionality
-
-    //switch turns
+     //switch turns
     turn === 'X' ? turn = 'O' : turn = 'X';
     //check for winner
     winner = getWinner();
@@ -111,7 +109,6 @@ function renderBoard() {
             if (cellVal !== 0 && cellEl.children.length === 0) {
                 cellEl.classList.add('full');
                 const img = document.createElement('img');
-                img.classList.add('.slide-in-fwd-bl');
                 img.setAttribute('src', DISPLAY[cellVal][1]);
                 cellEl.appendChild(img);
                 img.style.height = '15vmin';
@@ -126,26 +123,45 @@ function renderMessage() {
     } else if (winner) {
         messageEl.innerHTML = `${DISPLAY[winner][0]} Wins!`;
     } else {
-        messageEl.innerHTML = `${DISPLAY[turn][0]}'s Turn`;
+        messageEl.innerHTML = `Turn: ${DISPLAY[turn][0]}`;
     }
 }
 
 function renderControls() {
     if (winner) {
         playAgainBtn.style.visibility = 'visible';
-        [...document.getElementsByTagName('p')].forEach(par => {
-            par.style.visibility = 'hidden';
+        const whosTurnImgs = [...document.getElementsByClassName('whosTurn')]
+        whosTurnImgs.forEach(whosTurnImg => {
+            whosTurnImg.style.visibility = 'hidden';
+            whosTurnImg.style.height = '15vmin';
         });
         [...document.querySelectorAll('.tile')].forEach(tile => {
             tile.classList.remove('tile');
         });
+
     } else {
         playAgainBtn.style.visibility = 'hidden';
-        [...document.getElementsByTagName('p')].forEach(par => {
-            par.style.visibility = 'visible';
+        const whosTurnImgs = [...document.getElementsByClassName('whosTurn')]
+        whosTurnImgs.forEach(whosTurnImg => {
+            whosTurnImg.style.visibility = 'visible';
         });
         [...document.querySelectorAll('#board > div')].forEach(tile => {
             tile.classList.add('tile');
         });
+        if (turn === 'X') {
+            whosTurnImgs[0].style.height = '30vmin';
+            whosTurnImgs[0].style.margin = '-25vmin 0';
+            whosTurnImgs[1].style.height = '15vmin';
+            whosTurnImgs[1].style.margin = '-10vmin 0';
+            whosTurnImgs[1].style.opacity = '50%';
+            whosTurnImgs[0].style.opacity = '100%';
+        } else {
+            whosTurnImgs[1].style.height = '30vmin';
+            whosTurnImgs[1].style.margin = '-25vmin 0';
+            whosTurnImgs[0].style.height = '15vmin';
+            whosTurnImgs[0].style.margin = '-10vmin 0';
+            whosTurnImgs[0].style.opacity = '50%';
+            whosTurnImgs[1].style.opacity = '100%';
+        }
     }
 }
