@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Chewy&family=DynaPuff:wght@529&family=Knewave&family=Titan+One&display=swap');
+
 * {
     box-sizing: border-box;
 }
@@ -5,23 +7,32 @@
 body {
     height: 100vh;
     margin: 0;
-    font-family: 'reglisse', cursive;
+    font-family: 'Titan One', cursive;
+    -webkit-text-stroke-width: 0.15vmin;
+    letter-spacing: 1vmin;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: lightgrey;
+    background-color: rgb(196, 196, 196);
 }
 
 header {
-    font-size: 8vmin;
+    font-size: 10vmin;
     font-weight: bold;
-    color: #272D3F;
+    -webkit-text-stroke-color: #0e1836;
+    color: #cfa0ff;
 }
 
 h1 {
     font-size: 4vmin;
     margin: 0;
+    -webkit-text-stroke-color: #360568;
+    color: #a0b7ff;
+}
+
+#turnGlow {
+    filter: drop-shadow(0 0 1vmin white);
 }
 
 #board {
@@ -36,6 +47,7 @@ h1 {
     box-shadow: 0 0 20px 10px #f7efff;
 }
 
+/* cells */
 #board>div {
     border-radius: 10%;
     background-color: #4E5B7E;
@@ -46,24 +58,36 @@ h1 {
     justify-content: center;
 }
 
-#board>div.tile:hover {
+/* hovering controls */
+#board>div.hoverable:hover {
     opacity: 70%;
     transform: scale(1.1);
     transition: transform 150ms ease-in;
     border: solid 0.5vmin #7e6992;
 }
 
-#board>div.full {
-    opacity: 70%;
+/* styling for taken cells */
+#board>div.X {
+    opacity: 100%;
     transform: scale(1.1);
-    border: solid 0.5vmin #7e6992;
+    background-color: #c080ff;
+    border: solid 0.5vmin #9c5bdd;
 }
 
-#board>div.full>img {
-    -webkit-filter: drop-shadow(0.75vmin 0.75vmin 0.75vmin black);
-    filter: drop-shadow(0.75vmin 0.75vmin 0.75vmin black);
+#board>div.O {
+    opacity: 100%;
+    transform: scale(1.1);
+    background-color: #90adff;
+    border: solid 0.5vmin #6f8cdc;
 }
 
+#board>div.X>img, #board>div.O>img {
+    -webkit-filter: drop-shadow(-0.75vmin 0.75vmin 0.75vmin black);
+    filter: drop-shadow(-0.75vmin 0.75vmin 0.75vmin black);
+    height: 15vmin;
+}
+
+/* icon controls */
 .currTurn {
     -webkit-filter: drop-shadow(0 1vmin 2vmin white);
     filter: drop-shadow(0 1vmin 2vmin white);
@@ -74,8 +98,22 @@ h1 {
     gap: 40vmin;
 }
 
-
 #footer>img {
     height: 15vmin;
     margin: -10vmin 0;
+}
+
+button {
+    padding: 3vmin;
+    margin-top: -2vmin;
+    font-size: 3vmin;
+    border-radius: 4vmin;
+    border: 0.3vmin solid #634b7a;
+    color: #634b7a;
+    background-color: #d2deff;
+}
+
+button:hover {
+    color: #d2deff;
+    background-color: #634b7a;
 }
