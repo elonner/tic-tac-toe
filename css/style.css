@@ -5,7 +5,7 @@
 body {
     height: 100vh;
     margin: 0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Reglisse', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -64,10 +64,16 @@ h1 {
     filter: drop-shadow(0.75vmin 0.75vmin 0.75vmin black);
 }
 
+.currTurn {
+    -webkit-filter: drop-shadow(0 1vmin 2vmin white);
+    filter: drop-shadow(0 1vmin 2vmin white);
+}
+
 #footer {
     display: flex;
     gap: 40vmin;
 }
+
 
 #footer>img {
     height: 15vmin;

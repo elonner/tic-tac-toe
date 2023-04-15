@@ -155,6 +155,8 @@ function renderControls() {
             whosTurnImgs[1].style.margin = '-10vmin 0';
             whosTurnImgs[1].style.opacity = '50%';
             whosTurnImgs[0].style.opacity = '100%';
+            whosTurnImgs[0].classList.add('currTurn');
+            whosTurnImgs[1].classList.remove('currTurn');
         } else {
             whosTurnImgs[1].style.height = '30vmin';
             whosTurnImgs[1].style.margin = '-25vmin 0';
@@ -162,6 +164,8 @@ function renderControls() {
             whosTurnImgs[0].style.margin = '-10vmin 0';
             whosTurnImgs[0].style.opacity = '50%';
             whosTurnImgs[1].style.opacity = '100%';
+            whosTurnImgs[1].classList.add('currTurn');
+            whosTurnImgs[0].classList.remove('currTurn');
         }
     }
 }
