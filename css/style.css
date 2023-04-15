@@ -5,7 +5,7 @@
 body {
     height: 100vh;
     margin: 0;
-    font-family: 'Reglisse', cursive;
+    font-family: 'reglisse', cursive;
     display: flex;
     flex-direction: column;
     justify-content: center;
