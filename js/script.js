@@ -9,6 +9,7 @@ const DISPLAY = {
 let board;
 let turn;
 let winner;
+let totTurns;
 
 
 //--------cached elements
@@ -32,6 +33,7 @@ function init() {
         [0, 0, 0]  //row 2
     ];
     turn = 'X';
+    totTurns = 0;
     winner = null;
     render();
 }
@@ -42,16 +44,45 @@ function handleMove(e) {
     //update board
     const rowIdx = e.target.id[3];
     const colIdx = e.target.id[1]
+    //change value of square
+    if (board[rowIdx][colIdx] === 'X' || board[rowIdx][colIdx] === 'O') return;
     board[rowIdx][colIdx] = turn;
+    totTurns++;
     //switch turns
     turn === 'X' ? turn = 'O' : turn = 'X';
     //check for winner
-    winner = getWinner(rowIdx, colIdx);
+    winner = getWinner();
     render();
 }
 
-function getWinner(rowIdx, colIdx) {
-    
+function getWinner() {
+    //check rows
+    for (let row of board) {
+        if (new Set(row).size === 1) return row[0];
+    }
+    //check columns
+    for (let i = 0; i < 3; i++) {
+        const col = new Set([board[0][i], board[1][i], board[2][i]]);
+        if (col.size === 1) {
+            return board[0][i];
+        }
+    }
+    //Check diagonals
+    const diag1 = new Set([board[0][0], board[1][1], board[2][2]]);
+    if (diag1.size === 1) {
+        return board[1][1];
+    }
+    const diag2 = new Set([board[0][2], board[1][1], board[2][0]]);
+    if (diag2.size === 1) {
+        return board[1][1];
+    }
+
+    //tie
+    if (totTurns === 9) {
+        return 'T';
+    }
+
+    return null;
 }
 
 function render() {
