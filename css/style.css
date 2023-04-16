@@ -20,7 +20,7 @@ body {
 header {
     font-size: 10vmin;
     font-weight: bold;
-    -webkit-text-stroke-color: #0e1836;
+    -webkit-text-stroke-color: #1e2a4e;
     color: #cfa0ff;
 }
 
@@ -101,6 +101,21 @@ h1 {
 #footer>img {
     height: 15vmin;
     margin: -10vmin 0;
+}
+
+@media screen and (max-width: 150vh) {
+    #footer>img {
+        height: 10vmin;
+    }
+    #footer {
+        gap: 30vmin;
+    }
+}
+
+@media screen and (max-width: 110vh) {
+    #footer>img {
+        display: none;
+    }
 }
 
 button {
