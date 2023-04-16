@@ -21,14 +21,16 @@ const messageEl = document.querySelector('h1');
 const playAgainBtn = document.querySelector('button');
 const xIconEl = document.getElementById('xIcon');
 const oIconEl = document.getElementById('oIcon');
+const boardEl = document.getElementById('board');
+const title = document.querySelector('header');
 
 //--------event listeners
-document.getElementById('board').addEventListener('click', handleMove);
+boardEl.addEventListener('click', handleMove);
 playAgainBtn.addEventListener('click', init);
 
 
 //--------functions;
-init(); 
+init();
 
 // Initialize all state, then call render()
 function init() {
@@ -68,7 +70,7 @@ function handleMove(e) {
     if (clickedCell.value === 'X' || clickedCell.value === 'O') return;
     clickedCell.value = turn; //X or O
     //add icon images
-    if (turn ===  'X') { 
+    if (turn === 'X') {
         clickedCell.imgURL = 'https://i.imgur.com/gG6q8U7.png';
     } else {
         clickedCell.imgURL = 'https://i.imgur.com/wB9i5bI.png';
@@ -117,9 +119,28 @@ function getWinner() {
 }
 
 function render() {
+    renderIntro();
     renderBoard();
     renderMessage();
     renderControls();
+}
+
+//adds the animation class to an element then removes it when done
+function animateCSS(element, animation, prefix = 'animate__') {
+    const animationName = `${prefix}${animation}`;
+    element.classList.add(`${prefix}animated`, animationName);
+    element.addEventListener('animationend', function (e) {
+        e.stopPropagation();
+        element.classList.remove(`${prefix}animated`, animationName);
+    });
+}
+
+//animates the board and header dropping in 
+function renderIntro() {
+    if (totTurns > 0) return;
+    animateCSS(title, 'backInDown');
+    animateCSS(boardEl, 'backInDown');
+    animateCSS(messageEl, 'backInDown');
 }
 
 function renderBoard() {
@@ -127,7 +148,7 @@ function renderBoard() {
         rowCells.forEach(cell => {
             if (cell.value !== 0 && cell.element.children.length === 0) {
                 //replace hoverable class wth X/O 
-                cell.element.classList.replace('hoverable', cell.value); 
+                cell.element.classList.replace('hoverable', cell.value);
                 //add image to show for X/O icon
                 const img = document.createElement('img');
                 img.setAttribute('src', cell.imgURL);
@@ -139,7 +160,7 @@ function renderBoard() {
 
 function renderMessage() {
     if (winner === 'T') {
-        messageEl.innerText = "It's a Tie!";
+        messageEl.innerText = "Cat's Scratch!";
     } else if (winner) {
         messageEl.innerHTML = `${winner} Wins!`;
     } else {
@@ -170,7 +191,7 @@ function renderControls() {
         playAgainBtn.style.visibility = 'hidden';
         xIconEl.style.visibility = 'visible';
         oIconEl.style.visibility = 'visible';
- 
+
         //ake the X/O icon whose turn it is larger and brighter
         if (turn === 'X') {
             xIconEl.style.height = '30vmin';
@@ -179,9 +200,8 @@ function renderControls() {
             oIconEl.style.margin = '-10vmin 0';
             oIconEl.style.opacity = '50%';
             xIconEl.style.opacity = '100%';
-            xIconEl.classList.add('currTurn');
-            xIconEl.classList.add('animate__animated', 'animate__pulse');
-            oIconEl.classList.remove('currTurn');
+            xIconEl.classList.add('currTurn', 'animate__animated', 'animate__pulse', 'animate__infinite');
+            oIconEl.classList.remove('currTurn', 'animate__animated', 'animate__pulse', 'animate__infinite');
         } else {
             oIconEl.style.height = '30vmin';
             oIconEl.style.margin = '-25vmin 0';
@@ -189,8 +209,8 @@ function renderControls() {
             xIconEl.style.margin = '-10vmin 0';
             xIconEl.style.opacity = '50%';
             oIconEl.style.opacity = '100%';
-            oIconEl.classList.add('currTurn');
-            xIconEl.classList.remove('currTurn');
+            oIconEl.classList.add('currTurn', 'animate__animated', 'animate__pulse', 'animate__infinite');
+            xIconEl.classList.remove('currTurn', 'animate__animated', 'animate__pulse', 'animate__infinite');
         }
     }
 }
